@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router();
-
+    // Import schemas:
+const Pregunta = require('../models/pregunta')
+const Examen = require('../models/examen')
 
 
 //ruta para obtener preguntas:
@@ -24,22 +26,28 @@ router.get('/preguntas', (req,res) => {
         ]
     })
 })
-// ruta para añadir pregunta:
-router.post('/preguntas', (req,res) => {
-    console.log(req.body)
-    res.send({
-        Examen: req.body.exam_template,
-        Id: req.body.id_pregunta,
-        Pregunta: req.body.pregunta
-        })
+router.post('/preguntas', (req,res, next) => {
+
+    Pregunta.create(req.body)
+            .then((pregunta) => {
+                res.send(pregunta)
+            }).catch(next)
+
 })
-// ruta para editar pregunta:
 router.put('/preguntas/:id', (req,res) => {
     res.send({ TYPE: 'PUT' })
 })
-// ruta para borrar pregunta
 router.delete('/preguntas/:id', (req,res) => {
     res.send({ TYPE: 'DELETE' })
+})
+
+router.post('/examen', (req,res) => {
+
+    Examen.create(req.body)
+          .then((examen) => {
+              res.send(examen)
+          })
+
 })
 
 

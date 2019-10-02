@@ -8,5 +8,6 @@ const PreguntaSchema = new Schema({
     }
 });
 
+const Pregunta = mongoose.model('pregunta', PreguntaSchema)
 
-
+module.exports = Pregunta;
