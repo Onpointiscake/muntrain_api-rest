@@ -6,6 +6,9 @@ const ExamenSchema = new Schema({
         type: String,
         required: [true, 'debes escribir un titulo']
     },
+    tiempo_limite: {
+        type: Number
+    },
     acabado: {
         type: Boolean,
         default: false

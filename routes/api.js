@@ -3,30 +3,25 @@ const router = express.Router();
     // Import schemas:
 const Pregunta = require('../models/pregunta')
 const Examen = require('../models/examen')
+const Respuestas = require('../models/respuesta')
 
 
-//ruta para obtener preguntas:
-router.get('/preguntas', (req,res) => {
-    res.send({
-        preguntas: [
-            {
-                "exam_template": 1,
-                "id_pregunta": 1,
-                "pregunta": '¿Que clase de altitud es esta?'
-            },
-            {
-                "exam_template": 1,
-                "id_pregunta": 2,
-                "pregunta": '¿Que clase de lugar es este?'
-            },
-            {   "exam_template": 1,
-                "id_pregunta": 3,
-                "pregunta": '¿Hacia donde iremos para superar ese pico?'
-            },
-        ]
-    })
+router.get('/pregunta', (req,res) => {
+
+    Pregunta.findOne()
+
 })
-router.post('/preguntas', (req,res, next) => {
+router.get('/examen', (req,res) => {
+
+    Examen.findOne()
+
+})
+router.get('/respuestas', (req,res) => {
+
+    Respuestas.findOne()
+
+})
+router.post('/pregunta', (req,res, next) => {
 
     Pregunta.create(req.body)
             .then((pregunta) => {
@@ -34,40 +29,60 @@ router.post('/preguntas', (req,res, next) => {
             }).catch(next)
 
 })
-router.put('/preguntas/:id', (req,res) => {
-    res.send({ TYPE: 'PUT' })
-})
-router.delete('/preguntas/:id', (req,res) => {
-    res.send({ TYPE: 'DELETE' })
-})
-
-router.post('/examen', (req,res) => {
+router.post('/examen', (req,res, next) => {
 
     Examen.create(req.body)
           .then((examen) => {
               res.send(examen)
-          })
+          }).catch(next)
+
+})
+router.post('/respuestas', (req,res, next) => {
+
+    Respuestas.create(req.body)
+          .then((respuesta) => {
+              res.send(respuesta)
+          }).catch(next)
+
+})
+router.put('/pregunta/:id', (req,res) => {
+
+    Pregunta.findByIdAndUpdate(req.params.id, req.body)
+            .then(Pregunta.findOne({_id: req.params.id})
+                          .then(pregunta => res.send(pregunta)))
+
+})
+router.put('/examen/:id', (req,res) => {
+
+    Examen.findByIdAndUpdate(req.params.id, req.body)
+          .then(Examen.findOne({_id: req.params.id})
+                      .then(examen => res.send(examen)))
+
+})
+router.put('/respuestas/:id', (req,res) => {
+
+    Respuestas.findByIdAndUpdate(req.params.id, req.body)
+    .then(Respuestas.findOne({_id: req.params.id})
+                .then(respuesta => res.send(respuesta)))
+
+})
+router.delete('/pregunta/:id', (req,res) => {
+
+    Pregunta.findByIdAndRemove(req.params.id)
+            .then(pregunta => res.send({archivo_eliminado: pregunta}))
+
+})
+router.delete('/examen/:id', (req,res) => {
+
+    Examen.findByIdAndRemove(req.params.id)
+          .then(examen => res.send({archivo_eliminado: examen}))
+})
+router.delete('/respuestas/:id', (req,res) => {
+
+    Respuestas.findByIdAndRemove(req.params.id)
+          .then(respuesta => res.send({archivo_eliminado: respuesta}))
 
 })
 
-
-router.get('/respuestas', (req,res) => {
-    res.send({
-        respuestas: [
-            {
-                "id_pregunta": 1,
-                "pregunta_options": ['Una muy baja', 'Una media', 'Una alta']
-            },
-            {
-                "id_pregunta": 2,
-                "pregunta_options": ['Un lugar peligroso', 'Un lugar a salvo', 'Un lugar extraño']
-            },
-            {
-                "id_pregunta": 3,
-                "pregunta_options": ['Hacia arriba', 'Hacia abajo', 'Hacia la izquierda']
-            }
-        ]
-    })
-})
 
 module.exports = router;

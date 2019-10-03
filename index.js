@@ -5,9 +5,8 @@ const mongoose = require('mongoose')
 const routes = require('./routes/api')
 
 // Connect to mongodb
-mongoose.connect('mongodb://localhost/muntraingo')
+mongoose.connect('mongodb://localhost/muntraingo', { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = global.Promise;
-
 
 app.use(bodyParser.json())
 app.use('/api', routes)
