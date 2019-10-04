@@ -6,21 +6,46 @@ const Examen = require('../models/examen')
 const Respuestas = require('../models/respuesta')
 
 
-router.get('/pregunta', (req,res) => {
+router.get('/pregunta/:preguntaId', (req,res) => {
 
-    Pregunta.findOne()
-
+    const id = req.params.preguntaId;
+    Pregunta.findById(id)
+            .exec()
+            .then(doc => {
+                console.log(doc)
+                res.status(200).json(doc)
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({error: err})
+            })
 })
-router.get('/examen', (req,res) => {
+router.get('/examen/:examenId', (req,res) => {
 
-    Examen.findOne()
-
+    const id = req.params.examenId;
+    Examen.findById(id)
+            .exec()
+            .then(doc => {
+                console.log(doc)
+                res.status(200).json(doc)
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({error: err})
+            })
 })
-router.get('/respuestas', (req,res) => {
+router.get('/respuestas/:respuestasId', (req,res) => {
 
-    Respuestas.findOne()
-
+    const id = req.params.respuestasId;
+    Respuestas.findById(id)
+            .exec()
+            .then(doc => {
+                console.log(doc)
+                res.status(200).json(doc)
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({error: err})
+            })
 })
+
 router.post('/pregunta', (req,res, next) => {
 
     Pregunta.create(req.body)
