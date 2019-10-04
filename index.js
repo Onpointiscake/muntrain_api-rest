@@ -8,6 +8,7 @@ const routes = require('./routes/api')
 mongoose.connect('mongodb://localhost/muntraingo', { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = global.Promise;
 
+app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use('/api', routes)
 

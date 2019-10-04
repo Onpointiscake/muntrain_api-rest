@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router();
+const encrypt = require('bcrypt')
     // Import schemas:
 const Pregunta = require('../models/pregunta')
 const Examen = require('../models/examen')
 const Respuestas = require('../models/respuesta')
-
+const Usuarios = require('../models/usuario')
 
 router.get('/pregunta/:preguntaId', (req,res) => {
 
@@ -45,7 +46,34 @@ router.get('/respuestas/:respuestasId', (req,res) => {
                 res.status(500).json({error: err})
             })
 })
+router.post('/registrarse', (req,res, next) => {
 
+    Usuarios.find({email: req.body.email}).exec()
+            .then(emailFound => {
+                if (emailFound.length >= 1){
+                    return res.status(409).json({message: 'el email ya existe'})
+                } else {
+                    encrypt.hash(req.body.password, 10, 
+                        (err, hash) => {
+                            if (err){
+                                return res.status(500).json({
+                                    error: err
+                                })
+                            } else {
+                                const usuario = new Usuarios({
+                                    email: req.body.email,
+                                    password: hash
+                                })
+                                usuario.save()
+                                        .then(result => res.status(201).json({message: 'usuario creado'}))
+                                        .catch(err => res.status(500).json({error: err}))
+                            }
+                        })
+                }
+            })
+            .catch()
+
+})
 router.post('/pregunta', (req,res, next) => {
 
     Pregunta.create(req.body)
@@ -91,20 +119,25 @@ router.put('/respuestas/:id', (req,res) => {
                 .then(respuesta => res.send(respuesta)))
 
 })
-router.delete('/pregunta/:id', (req,res) => {
+router.delete('/:usuario/:usuarioId', (req,res) => {
 
-    Pregunta.findByIdAndRemove(req.params.id)
+    Usuarios.findByIdAndRemove(req.params.usuarioId)
+            .then(usuario => res.send({documento_eliminado: usuario}))
+})
+router.delete('/pregunta/:preguntaId', (req,res) => {
+
+    Pregunta.findByIdAndRemove(req.params.preguntaId)
             .then(pregunta => res.send({archivo_eliminado: pregunta}))
 
 })
-router.delete('/examen/:id', (req,res) => {
+router.delete('/examen/:examenId', (req,res) => {
 
-    Examen.findByIdAndRemove(req.params.id)
+    Examen.findByIdAndRemove(req.params.examenId)
           .then(examen => res.send({archivo_eliminado: examen}))
 })
-router.delete('/respuestas/:id', (req,res) => {
+router.delete('/respuestas/:respuestaId', (req,res) => {
 
-    Respuestas.findByIdAndRemove(req.params.id)
+    Respuestas.findByIdAndRemove(req.params.respuestaId)
           .then(respuesta => res.send({archivo_eliminado: respuesta}))
 
 })
