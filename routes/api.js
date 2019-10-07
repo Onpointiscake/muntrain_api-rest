@@ -7,6 +7,21 @@ const Examen = require('../models/examen')
 const Respuestas = require('../models/respuesta')
 const Usuarios = require('../models/usuario')
 
+//Obtener preguntas en referencia a un examen en concreto y obtener pregunta por id
+router.get('/pregunta/:referenciaExamen', (req,res) => {
+
+    const id = req.params.referenciaExamen;
+    Pregunta.find({examen: id})
+            .exec()
+            .then(doc => {
+                console.log(doc)
+                res.status(200).json(doc)
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({error: err})
+            })
+
+})
 router.get('/pregunta/:preguntaId', (req,res) => {
 
     const id = req.params.preguntaId;
@@ -19,6 +34,19 @@ router.get('/pregunta/:preguntaId', (req,res) => {
                 console.log(err)
                 res.status(500).json({error: err})
             })
+})
+// Obtener todos los examenes, y Obtener examen por id
+router.get('/examenes', (req,res) => {
+
+    Examen.find({})
+            .exec()
+            .then(doc => {
+                res.status(200).json(doc)
+            }).catch(err => {
+                console.log(err)
+                res.status(500).json({error: err})
+            })
+
 })
 router.get('/examen/:examenId', (req,res) => {
 
@@ -33,9 +61,10 @@ router.get('/examen/:examenId', (req,res) => {
                 res.status(500).json({error: err})
             })
 })
-router.get('/respuestas/:respuestasId', (req,res) => {
+// Obtener respuestas referentes a una pregunta, y Obtener respuesta por id
+router.get('/respuestas/:referenciaPregunta', (req,res) => {
 
-    const id = req.params.respuestasId;
+    const id = req.params.referenciaPregunta;
     Respuestas.findById(id)
             .exec()
             .then(doc => {
@@ -46,6 +75,7 @@ router.get('/respuestas/:respuestasId', (req,res) => {
                 res.status(500).json({error: err})
             })
 })
+// Registro de Usuario
 router.post('/registrarse', (req,res, next) => {
 
     Usuarios.find({email: req.body.email}).exec()
@@ -90,6 +120,7 @@ router.post('/examen', (req,res, next) => {
           }).catch(next)
 
 })
+// Añadir 4 respuestas
 router.post('/respuestas', (req,res, next) => {
 
     Respuestas.create(req.body)
