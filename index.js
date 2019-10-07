@@ -4,18 +4,32 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const routes = require('./routes/api')
 
-// Connect to mongodb
-mongoose.connect('mongodb://localhost/muntraingo', { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.Promise = global.Promise;
+//Esta parte es la que tienes que cambiar
+    // Connect to mongodb
+    //mongoose.connect('mongodb://localhost/muntraingo', { useNewUrlParser: true, useUnifiedTopology: true })
+    //Hasta aqui ------------------------
 
-app.use(express.static('public'))
-app.use(bodyParser.json())
-app.use('/api', routes)
+    //Con esto:
 
-// middleware para admitir errores:
-app.use((err,req,res, next) => {
-    res.status(422).send({
-        error: err.message
-    })
-})
-app.listen(process.env.port || 4000, () => console.log('express listening now...'))
+ const MongoClient = require('mongodb').MongoClient;
+   const uri = "mongodb+srv://dbUser594:<animongo33>@cluster0-ryb4p.mongodb.net/admin?retryWrites=true&w=majority"
+   const client = new MongoClient(uri, { useNewUrlParser: true });
+   client.connect(err => {
+       const collection = client.db("test").collection("devices");
+      // perform actions on the collection object
+      client.close();
+  });
+ ///Fin de sustitucion -------------
+
+ mongoose.Promise = global.Promise;
+ app.use(express.static('public'))
+ app.use(bodyParser.json())
+ app.use('/api', routes)
+
+ // middleware para admitir errores:
+ app.use((err,req,res, next) => {
+     res.status(422).send({
+         error: err.message
+     })
+ })
+ app.listen(process.env.port || 4000, () => console.log('express listening now...'))
