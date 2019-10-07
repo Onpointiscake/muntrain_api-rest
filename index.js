@@ -12,7 +12,7 @@ const routes = require('./routes/api')
     //Con esto:
 
  const MongoClient = require('mongodb').MongoClient;
-   const uri = "mongodb+srv://dbUser594:<animongo33>@cluster0-ryb4p.mongodb.net/admin?retryWrites=true&w=majority"
+   const uri = "mongodb+srv://dbUser594:superSecret@cluster0-ryb4p.mongodb.net/admin?retryWrites=true&w=majority"
    const client = new MongoClient(uri, { useNewUrlParser: true });
    client.connect(err => {
        const collection = client.db("test").collection("devices");
