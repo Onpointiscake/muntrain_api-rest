@@ -10,3 +10,11 @@ body{
 .jumbotron, .jumbotron-fluid{
     padding: 20px 0px;
 }
+#root{
+    padding: 20px 15px;
+    max-height: 500px;
+    overflow: scroll;
+}
+.exam-container{
+    border: 3px solid grey;
+}
