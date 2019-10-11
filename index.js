@@ -6,6 +6,9 @@ const routes = require('./routes/api')
 
 // Connect to mongodb
 mongoose.connect('mongodb://localhost/muntraingo', { useNewUrlParser: true, useUnifiedTopology: true })
+// fix a weird error
+mongoose.set('useCreateIndex', true);
+
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'))

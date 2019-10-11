@@ -1,5 +1,7 @@
 body{
     padding: 30px 20px;
+    background-image: url("../img/fondo-index.jpg");
+    background-size: cover;
 }
 .main-double-wrapper{
     width: 50%;
