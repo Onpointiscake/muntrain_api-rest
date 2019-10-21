@@ -19,28 +19,28 @@
                                     <form>
                                         <div class="form-group">
                                         <label for="exampleFormControlInput1">Titulo</label>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="examen de fisica cuántica">
+                                        <input type="text" class="form-control" id="exameninput" placeholder="examen de fisica cuántica">
                                         </div>
                                         <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Dificultad estimada</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>Baja</option>
-                                            <option>Media</option>
-                                            <option>Alta</option>
+                                        <label for="dificultadoptions">Dificultad estimada</label>
+                                        <select class="form-control" id="dificultadoptions">
+                                            <option value="baja">Baja</option>
+                                            <option value="media" selected="selected">Media</option>
+                                            <option value="alta">Alta</option>
                                         </select>
                                         </div>
                                     </form>
                                     <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Tiempo limite</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>2 Minutos</option>
-                                            <option>5 Minutos</option>
-                                            <option>10 Minutos</option>
+                                            <label for="tiempooptions">Tiempo limite</label>
+                                            <select class="form-control" id="tiempooptions">
+                                                <option value="2" selected="selected">2 Minutos</option>
+                                                <option value="5">5 Minutos</option>
+                                                <option value="10">10 Minutos</option>
                                             </select>
                                         </div>
                                         </form>
                                         <hr class="my-4">
-                                        <a class="btn btn-primary btn-lg" href="#" role="button">Crear</a>
+                                        <button onclick="createExam()" class="btn btn-primary btn-lg" href="#" role="button">Crear</button>
                             </div>
                           </div>
             </div>
@@ -62,6 +62,7 @@
 
 </body>
 <!-- Latest compiled and minified JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="comunication.js"></script>
 </html>

@@ -8,12 +8,11 @@ const examContainer = document.createElement('div')
 examContainer.setAttribute('class', 'container');
 examenesContainer.appendChild(examContainer)
 
-// Request and rendering:
-var request = new XMLHttpRequest()
-request.open('GET', 'http://localhost:4000/api/examenes', true)
-
 // Fetch exams and render:
 function getExamenes(){
+
+    var request = new XMLHttpRequest()
+    request.open('GET', 'http://localhost:4000/api/examenes', true)
 
     // Activar display del container que habiamos ocultado:
     examenesContainer.style.display = 'block';
@@ -39,6 +38,7 @@ function getExamenes(){
                 const numeroPreguntas = document.createElement('p')
                 numeroPreguntas.textContent = "Numero de Preguntas: " + examen.numero_preguntas;
                 examenWrapper.appendChild(numeroPreguntas);
+                
     
                 examContainer.appendChild(examenWrapper);
             })
@@ -47,5 +47,35 @@ function getExamenes(){
     
     request.send()
 
+}
+
+// Get exam´s values to Post
+var exam = document.getElementById("exameninput").value;
+var examName = exam.textContent;
+
+var difficulty = document.getElementById("dificultadoptions");
+var difficultyChosen = difficulty.options[difficulty.selectedIndex].value;
+
+var time = document.getElementById("tiempooptions");
+var timeChosen = time.options[time.selectedIndex].value;
+
+
+function createExam(){
+
+    console.log(exam)
+/*
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:4000/api/examen";
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log(json)
+      }
+  };
+  var data = JSON.stringify({"titulo": "Examen de html-13:00", "dificultad_info": "alta"});
+  xhr.send(data);
+  */
 }
 
